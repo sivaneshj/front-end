@@ -1,0 +1,74 @@
+
+#app{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+nav{
+  background-color: black;
+  min-height: 10vh;
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: space-around;
+}
+nav ul{
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+nav ul *{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+#content{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer{
+  background-color: black;
+  color: white;
+  min-height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#register{
+  width: 400px;
+  height: 450px;
+  border: 2px solid black;
+  text-align: center;
+}
+#register h2{
+  margin-bottom: 2rem;
+}
+#register form{
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: space-around;
+}
+#register form >p{
+  color: red;
+  font-size: 12px;
+}
+#register form *{
+  padding: 5px 15px;
+  margin: 5px;
+  font-size: 15px;
+}
+#register form button{
+  background-color: blue;
+  border-radius: 10px;
+  color: white;
+}
+#admin table *{
+  padding: 5px 15px;
+}
