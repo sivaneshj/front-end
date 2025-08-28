@@ -72,3 +72,12 @@ footer{
 #admin table *{
   padding: 5px 15px;
 }
+
+#admin table button{
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 10px;
+  border: 0px;
+  padding: 8px 20px;
+}

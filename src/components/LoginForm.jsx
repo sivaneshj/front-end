@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import DataContext from '../usecontext/DataContext'
 
-function LoginForm({err,obj,setobj,handleloginsubmit}) {
+function LoginForm() {
+    const {update,setupdate, handleupdatesubmit,err,obj,setobj,handleloginsubmit,handleupdate} = useContext(DataContext);
   return (
     <div id='register'>
-        <h2>Login</h2>
-        <form onSubmit={handleloginsubmit}>
+        <h2>{update ? "update credentials:":"Login"}</h2>
+        <form onSubmit={update ? handleupdatesubmit:handleloginsubmit}>
             <input type="text" name='userName' value={obj.userName} onChange={
                 (e)=>{
                     setobj((prev)=>{
@@ -26,7 +28,9 @@ function LoginForm({err,obj,setobj,handleloginsubmit}) {
                 }
             }placeholder='Enter password'/>
             {err && <p>{err}</p>}
-            <button type='submit'>Login</button>
+            {!update && <p onClick={handleupdate}>forget password ?</p>}
+            {update && <p onClick={()=> setupdate("")}>Back to login ?</p>}
+            <button type='submit'>{update ? "update" : "Login"}</button>
         </form>
     </div>
   )

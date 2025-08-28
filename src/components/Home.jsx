@@ -2,43 +2,43 @@ import React, { useEffect, useState } from 'react'
 import axios from '../axios'
 import List from './List'
 
-function Admin() {
-    const [users,setusers] = useState([])
+function Welcome() {
+  const [users,setusers] = useState([])
+  const role = localStorage.getItem("role") || "";
+  
     useEffect(()=>{
         const fetch = async()=>{
             try{
-                const res = await axios.get("/user/home");
+                const res = await axios.get("/home");
                 if(res.status == 200){
                     setusers(res.data);
                     console.log(res);
-                    
                 }
             }catch(err){
                 console.log(err);
-                
             }
         }
         (async()=>fetch())();
     },[])
     function handledelete(id){
-        const fetch = async()=>{
-            try{
-                const res = await axios.delete(`user/delete/${id}`);
-                if(res.status == 204){
-                    setusers(users.push.map((item)=>{
-                        return item.userId != id
-                    }))
+            const fetch = async()=>{
+                try{
+                    const res = await axios.delete(`/delete/${id}`);
+                    if(res.status == 204){
+                        setusers(users.filter((item)=>{
+                            return item.userId != id  
+                        }))
+                    }
+                }catch(err){
+                    console.log(err);
                 }
-            }catch(err){
-                console.log(err);
             }
+            (async()=>await fetch())();
         }
-        (async()=>await fetch())();
-    }
   return (
     <>
         <section id='admin'>
-            <h2>Admin</h2>
+            <h2>{role == "admin" ? "Hello, Admin" : "Hello, user:"}</h2>
             <table border="2px">
                 <thead>
                     <tr>
@@ -46,17 +46,18 @@ function Admin() {
                         <th>Name</th>
                         <th>password</th>
                         <th>role</th>
-                        <th>delete</th>
+                        {role=="admin" &&
+                            <th>Delete</th>}
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((item)=>{
-                        return <tr>
+                    {users && users.map((item)=>{
+                        return <tr key={item.userId}>
                                     <List key={item.userId} item={item}/>
-                                    <td><button onClick={()=>handledelete(item.userId)}>Delete</button></td>
+                                    {role && 
+                                    <td><button onClick={()=>handledelete(item.userId)}>Delete</button></td> }
                                 </tr>
                     })}
-                    
                 </tbody>
             </table>
         </section>
@@ -64,4 +65,4 @@ function Admin() {
   )
 }
 
-export default Admin
+export default Welcome

@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import DataContext from '../usecontext/DataContext'
 
-function Register({err,obj,setobj,handleregsubmit}) {
+function Register() {
+    const {err, obj, setobj, handleregsubmit} = useContext(DataContext);
   return (
     <div id='register'>
         <h2>Register</h2>
