@@ -9,7 +9,7 @@ function Welcome() {
     useEffect(()=>{
         const fetch = async()=>{
             try{
-                const res = await axios.get("/home");
+                const res = await axios.get("/users/");
                 if(res.status == 200){
                     setusers(res.data);
                     console.log(res);
@@ -20,13 +20,13 @@ function Welcome() {
         }
         (async()=>fetch())();
     },[])
-    function handledelete(id){
+    function handledelete(name){
             const fetch = async()=>{
                 try{
-                    const res = await axios.delete(`/delete/${id}`);
+                    const res = await axios.delete(`/users/${name}`);
                     if(res.status == 204){
                         setusers(users.filter((item)=>{
-                            return item.userId != id  
+                            return item.userName != name
                         }))
                     }
                 }catch(err){
@@ -55,7 +55,7 @@ function Welcome() {
                         return <tr key={item.userId}>
                                     <List key={item.userId} item={item}/>
                                     {role && 
-                                    <td><button onClick={()=>handledelete(item.userId)}>Delete</button></td> }
+                                    <td><button onClick={()=>handledelete(item.userName)}>Delete</button></td> }
                                 </tr>
                     })}
                 </tbody>

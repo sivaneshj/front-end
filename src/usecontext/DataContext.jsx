@@ -20,7 +20,9 @@ export const DataProvider= ({children}) =>{
     seterr("");
     const fetch = async()=>{
       try{
-        const res = await axios.post("/register",obj);
+        const res = await axios.post("/users/create/",obj);
+        console.log(res);
+        
         if(res.status == 201){
           setobj({
             userName:"",
@@ -30,7 +32,7 @@ export const DataProvider= ({children}) =>{
           navigate("/login");
         }
       }catch(err){
-        seterr(err.message);
+        seterr(err.response.data);
       }
     }
     (async()=>await fetch())();
@@ -41,10 +43,10 @@ export const DataProvider= ({children}) =>{
     seterr("");
     const fetch = async()=>{
       try{
-        const res = await axios.post("/login",obj);
+        const res = await axios.post("/users/login/",obj);
         
         if(res.status == 200){
-          if(res.data == "admin"){
+          if(res.data.role == "admin"){
             localStorage.setItem("role","admin");
           }
           setobj({
@@ -55,7 +57,7 @@ export const DataProvider= ({children}) =>{
           navigate("/home")
         }
       }catch(err){
-        seterr(err.message);
+        seterr(err.response.data);
       }
     }
     (async()=>await fetch())();
@@ -65,6 +67,7 @@ export const DataProvider= ({children}) =>{
     localStorage.removeItem("role");
     navigate("/");
   }
+  
   function handleupdate(){
     setupdate("active");
   }
@@ -73,11 +76,9 @@ export const DataProvider= ({children}) =>{
     seterr("");
     const fetch = async()=>{
       try{
-        const res = await axios.put(`/update/${obj.userName}`,{
+        const res = await axios.put(`/users/${obj.userName}`,{
           password:obj.password
         });
-        console.log(res);
-        
         if(res.status == 200){
           setobj({
             userName:"",
